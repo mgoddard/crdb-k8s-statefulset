@@ -7,6 +7,13 @@ REGION="us-east4"
 DATE=$( date '+%Y%m%d' )
 NAME="${USER}-${DATE}"
 
+# Save some of these for reuse when this cluster is deleted
+# gcloud container clusters delete $NAME --region=$REGION --quiet
+cat > gke_env.sh <<EoM
+export NAME=$NAME
+export REGION=$REGION
+EoM
+
 # Create the GKE K8s cluster
 # See https://www.cockroachlabs.com/docs/stable/orchestrate-cockroachdb-with-kubernetes.html#hosted-gke"
 export USE_GKE_GCLOUD_AUTH_PLUGIN=True
