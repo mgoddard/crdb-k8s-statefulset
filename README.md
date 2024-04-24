@@ -5,7 +5,7 @@ This repo just contains scripts to help deploy CockroachDB onto GKE, per
 with the addition of the _Geo Tourist_ demo app which is available
 in [this GitHub repo](https://github.com/cockroachlabs-field/crdb-geo-tourist-iam).
 
-## Script for a demo (you can very to suit your goals)
+## Script for a demo (you can vary to suit your goals)
 
 **Note:** over time, parts of this may change and need to be updated; for example:
 * CockroachDB versions
