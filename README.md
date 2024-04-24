@@ -1,22 +1,35 @@
 # Kubernetes StatefulSet CockroachDB Deployment (single region, GCP)
 
 This repo just contains scripts to help deploy CockroachDB onto GKE, per
-[this doc](https://www.cockroachlabs.com/docs/stable/deploy-cockroachdb-with-kubernetes?filters=manual).
+[this doc](https://www.cockroachlabs.com/docs/stable/deploy-cockroachdb-with-kubernetes?filters=manual),
+with the addition of the _Geo Tourist_ demo app which is available
+in [this GitHub repo](https://github.com/cockroachlabs-field/crdb-geo-tourist-iam).
 
-## Scripts
+## Script for a demo (you can very to suit your goals)
 
-`00_setup_gke.sh`: Set up the GKE cluster
+**Note:** over time, parts of this may change and need to be updated; for example:
+* CockroachDB versions
+* _Geo Tourist_ app version
+* Documentation links
 
-`01_gen_certs.sh`: Generate certificates
+### Overall set up of GKE and CockroachDB clusters
+1. `00_setup_gke.sh`: Set up your GKE cluster.  Note the prerequisites listed in
+[this document](https://www.cockroachlabs.com/docs/stable/deploy-cockroachdb-with-kubernetes#hosted-gke)
+1. `01_gen_certs.sh`: Generate the required SSL certificates and create the required K8s _secrets_
+1. `02_apply_stateful_set.sh`: Applying CockroachDB stateful set configuration; when ready, it will print the public IP address which can be used to connect via SQL client of web browser, for DB Console (port 8080)
+1. `03_sql_client.sh`: Start a SQL client pod and use it to create a _demouser_ account in CockroachDB
+1. `04_psql_cli.sh`: (optional) use the `psql` CLI to access the CockroachDB cluster as _demouser_
 
-`02_apply_stateful_set.sh`: Apply the CockroachDB stateful set configuration, yielding a running cluster
-with a publicly accessible load balancer
+### Deploy the _Geo Tourist_ demo against that CockroachDB cluster
+1. `08_geo_load_data.sh`: Deploy the data loader app which creates tables and loads data
+1. `09_geo_app_start.sh`: Deploy the app itself; when finished, it will print the public IP address of the app
 
-`03_sql_client.sh`: Deploy a SQL client pod and add a database role
+### Day two operations
+1. `10_scale_out.sh`: add a 4th node to the CockroachDB cluster (zero down time)
+1. `11_rolling_upgrade.sh`: perform a zero downtime rolling upgrade of the CockroachDB cluster
+1. `12_kill_a_node.sh`: kill one of the CockroachDB nodes and observe effects via DB Console and/or the app
 
-`04_psql_cli.sh`: Wrapper around `psql` to access the cluster using the role added in the previous step
-
-`05_scale_out.sh`: Add a 4th node
-
-`06_rolling_upgrade.sh`: Perform an online rolling upgrade
+### Clean it all up
+1. `20_clean_up.sh`: clean up the app and the CockroachDB components
+1. `21_gke_delete_cluster.sh`: delete the GKE cluster itself
 
