@@ -18,18 +18,19 @@ in [this GitHub repo](https://github.com/cockroachlabs-field/crdb-geo-tourist-ia
 1. `01_gen_certs.sh`: Generate the required SSL certificates and create the required K8s _secrets_
 1. `02_apply_stateful_set.sh`: Applying CockroachDB stateful set configuration; when ready, it will print the public IP address which can be used to connect via SQL client of web browser, for DB Console (port 8080)
 1. `03_sql_client.sh`: Start a SQL client pod and use it to create a _demouser_ account in CockroachDB
-1. `04_psql_cli.sh`: (optional) use the `psql` CLI to access the CockroachDB cluster as _demouser_
+1. `04_pgweb_start.sh`: Use the [PGWeb SQL UI](https://github.com/sosedoff/pgweb) to access the CockroachDB cluster as _demouser_
 
 ### Deploy the _Geo Tourist_ demo against that CockroachDB cluster
 1. `08_geo_load_data.sh`: Deploy the data loader app which creates tables and loads data
 1. `09_geo_app_start.sh`: Deploy the app itself; when finished, it will print the public IP address of the app
 
 ### Day two operations
-1. `10_scale_out.sh`: add a 4th node to the CockroachDB cluster (zero down time)
-1. `11_rolling_upgrade.sh`: perform a zero downtime rolling upgrade of the CockroachDB cluster
-1. `12_kill_a_node.sh`: kill one of the CockroachDB nodes and observe effects via DB Console and/or the app
+1. `10_scale_out.sh`: Add a 4th node to the CockroachDB cluster (zero down time)
+1. `11_rolling_upgrade.sh`: Perform a zero downtime rolling upgrade of the CockroachDB cluster
+1. `12_kill_a_node.sh`: Kill one of the CockroachDB nodes and observe effects via DB Console and/or the app
+1. `13_psql_cli.sh`: Use the `psql` CLI to connect to the CockroachDB cluster
 
 ### Clean it all up
-1. `20_clean_up.sh`: clean up the app and the CockroachDB components
-1. `21_gke_delete_cluster.sh`: delete the GKE cluster itself
+1. `20_clean_up.sh`: Clean up the app and the CockroachDB components
+1. `21_gke_delete_cluster.sh`: Delete the GKE cluster itself
 
