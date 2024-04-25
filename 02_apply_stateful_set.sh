@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo "Applying StorageClass SSD config ..."
+kubectl apply -f storage-class-ssd.yaml
+
 echo "Applying CockroachDB stateful set config ..."
 kubectl apply -f cockroachdb-statefulset.yaml
 
@@ -23,7 +26,7 @@ kubectl expose service cockroachdb-public --type=LoadBalancer --name=crdb-lb
 lb_ip=""
 while [[ ! $( echo $lb_ip | egrep '^(\d+\.){3}\d+$' ) ]]
 do
-  "Waiting to get the load balancer IP address ..."
+  echo "Waiting to get the load balancer IP address ..."
   lb_ip=$( kubectl get svc | sed 1d | awk '{print $4}' | egrep '^(\d+\.){3}\d+$' )
   sleep 1
 done

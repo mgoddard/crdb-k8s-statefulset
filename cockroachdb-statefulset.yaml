@@ -222,6 +222,7 @@ spec:
     spec:
       accessModes:
         - "ReadWriteOnce"
+      storageClassName: storage-class-ssd
       resources:
         requests:
           storage: 600Gi
