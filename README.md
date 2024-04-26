@@ -29,6 +29,7 @@ in [this GitHub repo](https://github.com/cockroachlabs-field/crdb-geo-tourist-ia
 1. `11_rolling_upgrade.sh`: Perform a zero downtime rolling upgrade of the CockroachDB cluster
 1. `12_kill_a_node.sh`: Kill one of the CockroachDB nodes and observe effects via DB Console and/or the app
 1. `13_psql_cli.sh`: Use the `psql` CLI to connect to the CockroachDB cluster
+1. `14_create_backup_schedule.sh`: Create a backup schedule for _defaultdb_. When this script is run, it outputs a list of requirements (Enterprise license, Cloud Storage bucket, service account with key).
 
 ### Clean it all up
 1. `20_clean_up.sh`: Clean up the app and the CockroachDB components
