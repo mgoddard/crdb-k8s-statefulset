@@ -13,6 +13,9 @@ case $y_n in
     ;;
 esac
 
+echo "Deleting the PGWeb app ..."
+kubectl delete -f ./pgweb.yaml
+
 echo "Deleting the Geo Tourist app ..."
 kubectl delete -f ./crdb-geo-tourist.yaml
 kubectl delete -f ./data-loader.yaml
@@ -26,4 +29,8 @@ kubectl delete pods,statefulsets,services,poddisruptionbudget,jobs,rolebinding,c
 
 echo "Deleting the persistent volumes and persistent volume claims ..."
 kubectl delete pv,pvc --all
+
+echo "Removing local certs directories ..."
+rm -rf ./certs ./my-safe-directory
+echo "Done"
 
