@@ -2,8 +2,12 @@
 
 This repo just contains scripts to help deploy CockroachDB onto GKE, per
 [this doc](https://www.cockroachlabs.com/docs/stable/deploy-cockroachdb-with-kubernetes?filters=manual),
-with the addition of the _Geo Tourist_ demo app which is available
-in [this GitHub repo](https://github.com/cockroachlabs-field/crdb-geo-tourist-iam).
+with the addition of:
+
+* The [locality-checker](https://github.com/cockroachdb/k8s/blob/master/locality-checker/README.md),
+which injects the `--locality` flag so you get `region` and `zones`
+* The [PGWeb](https://github.com/sosedoff/pgweb) Web UI SQL client
+* The _Geo Tourist_ demo app which is available in [this GitHub repo](https://github.com/cockroachlabs-field/crdb-geo-tourist-iam)
 
 ## Script for a demo (you can vary to suit your goals)
 
