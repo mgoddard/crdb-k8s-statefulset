@@ -21,6 +21,51 @@ rules:
   - get
 ---
 apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: cockroachdb
+  labels:
+    app: cockroachdb
+rules:
+# locality-container requires node GET privileges to read labels on nodes.
+- apiGroups:
+  - ""
+  resources:
+  - nodes
+  verbs:
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: cockroachdb
+  labels:
+    app: cockroachdb
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: cockroachdb
+subjects:
+- kind: ServiceAccount
+  name: cockroachdb
+  namespace: default
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: cockroachdb
+  labels:
+    app: cockroachdb
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cockroachdb
+subjects:
+- kind: ServiceAccount
+  name: cockroachdb
+  namespace: default
+---
+apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: cockroachdb
@@ -133,6 +178,18 @@ spec:
                   values:
                   - cockroachdb
               topologyKey: kubernetes.io/hostname
+      initContainers:
+      - image: cockroachdb/locality-checker:0.1
+        imagePullPolicy: IfNotPresent
+        name: locality-checker
+        volumeMounts:
+        - mountPath: /etc/cockroach-locality
+          name: cockroach-locality
+        env:
+        - name: KUBERNETES_NODE
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
       containers:
       - name: cockroachdb
         image: cockroachdb/cockroach:v23.2.4
@@ -174,6 +231,9 @@ spec:
           mountPath: /cockroach/cockroach-data
         - name: certs
           mountPath: /cockroach/cockroach-certs
+        - name: cockroach-locality
+          mountPath: /etc/cockroach-locality
+          readOnly: true
         env:
         - name: COCKROACH_CHANNEL
           value: kubernetes-secure
@@ -200,6 +260,7 @@ spec:
             --advertise-host $(hostname -f)
             --http-addr 0.0.0.0
             --join cockroachdb-0.cockroachdb,cockroachdb-1.cockroachdb,cockroachdb-2.cockroachdb
+            $(cat /etc/cockroach-locality/locality || true)
             --cache $(expr $MEMORY_LIMIT_MIB / 4)MiB
             --max-sql-memory $(expr $MEMORY_LIMIT_MIB / 4)MiB
       # No pre-stop hook is required, a SIGTERM plus some time is all that's
@@ -213,6 +274,8 @@ spec:
         secret:
           secretName: cockroachdb.node
           defaultMode: 256
+      - name: cockroach-locality
+        emptyDir: {}
   podManagementPolicy: Parallel
   updateStrategy:
     type: RollingUpdate
