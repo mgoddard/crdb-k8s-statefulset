@@ -7,6 +7,7 @@ with the addition of:
 * The [locality-checker](https://github.com/cockroachdb/k8s/blob/master/locality-checker/README.md),
 which injects the `--locality` flag so you get `region` and `zones`
 * The [PGWeb](https://github.com/sosedoff/pgweb) Web UI SQL client
+* The [_cockroach workload_](https://www.cockroachlabs.com/docs/dev/cockroach-workload) demo
 * The _Geo Tourist_ demo app which is available in [this GitHub repo](https://github.com/cockroachlabs-field/crdb-geo-tourist-iam)
 
 ## Script for a demo (you can vary to suit your goals)
@@ -24,11 +25,11 @@ which injects the `--locality` flag so you get `region` and `zones`
 1. `03_sql_client.sh`: Start a SQL client pod and use it to create a _demouser_ account in CockroachDB
 1. `04_pgweb_start.sh`: Use the [PGWeb SQL UI](https://github.com/sosedoff/pgweb) to access the CockroachDB cluster as _demouser_
 
-### **Optional:** Run _cockroach workload_ against that CockroachDB cluster
+### Option A: Run _cockroach workload_ against that CockroachDB cluster
 1. Specify the time in minutes to run the workload: `export WORKLOAD_RUN_MINUTES=15`
-1. `06_run_workload.sh`: Run `cockroach workload bank` for the specified duration
+1. `06_run_workload.sh`: Runs _cockroach workload bank_ for the specified duration (the script runs it all for you)
 
-### **Optional:** Deploy the _Geo Tourist_ demo against that CockroachDB cluster
+### Option B: Deploy the _Geo Tourist_ demo against that CockroachDB cluster
 1. `08_geo_load_data.sh`: Deploy the data loader app which creates tables and loads data
 1. `09_geo_app_start.sh`: Deploy the app itself; when finished, it will print the public IP address of the app
 
