@@ -1,6 +1,8 @@
 #!/bin/bash
 
-MACHINETYPE="e2-standard-4" # 4	vCPU, 16 GB RAM, $0.134012/hour
+MACHINETYPE="e2-standard-4" # 4 vCPU, 16 GB RAM, $0.134012/hour
+#MACHINETYPE="e2-standard-16" # 16 vCPU, 64 GB RAM, $0.701207/hour
+
 N_NODES=2 # This will create N_NODES *per AZ* within REGION
 REGION="us-east4"
 
