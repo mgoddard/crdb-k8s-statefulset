@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Scaling CockroachDB cluster out by adding a 4th node ..."
-kubectl scale statefulsets cockroachdb --replicas=4
+echo "Scaling CockroachDB cluster by adding additional node(s) ..."
+kubectl scale statefulsets cockroachdb --replicas=6
 echo "Ok"
 
