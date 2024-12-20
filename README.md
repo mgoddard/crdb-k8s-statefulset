@@ -31,6 +31,7 @@ which injects the `--locality` flag so you get `region` and `zones`
 
 ### Option B: Deploy the _Geo Tourist_ demo against that CockroachDB cluster
 1. `08_geo_load_data.sh`: Deploy the data loader app which creates tables and loads data
+1. Wait for the data loader to complete before launching the app
 1. `09_geo_app_start.sh`: Deploy the app itself; when finished, it will print the public IP address of the app
 
 ### Day two operations
