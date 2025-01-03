@@ -28,6 +28,7 @@ which injects the `--locality` flag so you get `region` and `zones`
 ### Option A: Run _cockroach workload_ against that CockroachDB cluster
 1. Specify the time in minutes to run the workload: `export WORKLOAD_RUN_MINUTES=15`
 1. `06_run_workload.sh`: Runs _cockroach workload bank_ for the specified duration (the script runs it all for you)
+1. Other _cockroach workload_ options are described [here](https://www.cockroachlabs.com/docs/stable/cockroach-workload#workloads)
 
 ### Option B: Deploy the _Geo Tourist_ demo against that CockroachDB cluster
 1. `08_geo_load_data.sh`: Deploy the data loader app which creates tables and loads data
